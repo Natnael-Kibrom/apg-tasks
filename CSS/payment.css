@@ -1,0 +1,71 @@
+.payment-form-div {
+    display: none;
+}
+
+@media print {
+    body {
+        margin: 0;
+        padding: 0;
+    }
+
+    .driversls {
+        visibility: hidden;
+        display: none;
+    }
+
+    .papersize {
+        width: 170mm;
+        /* A4 width */
+        height: 255mm;
+        /* A4 height */
+        margin: 0 auto;
+        margin-bottom: 55px;
+        padding-top: 40px;
+
+
+
+    }
+
+    span {
+        font-size: 20px;
+        text-decoration: underline 1.5px solid;
+    }
+
+    .pups {
+        font-size: 19px;
+        text-decoration: underline 1.5px solid;
+    }
+
+    .payment-form-div {
+        display: block;
+    }
+}
+body{
+    font-family: 'Times New Roman', Times, serif;
+    background-color: #181a1b;
+}
+
+.font1 {
+    font-size: 18px;
+    font-weight: bold;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+.font2 {
+    font-size: 16px;
+    font-weight: bold;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+.font3 {
+    font-size: 16px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+.am {
+    display: none;
+}
+
+.notActive {
+    display: none;
+}

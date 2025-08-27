@@ -1,0 +1,141 @@
+.content-all{
+    display: none;
+}
+@media print {
+    body {
+        margin: 0;
+        padding: 0;
+    }
+    .driversls {
+        visibility: hidden;
+        display: none;
+    }
+
+    .content-all {
+        width: 170mm;
+        /* A4 width */
+        height: 265mm;
+        /* A4 height */
+        margin: 0 auto;
+        padding-top: 15px;
+    }
+    .header-div {
+        font-size: 21.33px;
+    }
+    
+    .header-div p {
+        font-size: 21.33px;
+        font-weight: bold;
+    }
+        .employee-div {
+            width: 100%;
+        }
+        .employee-div p {
+            font-size: 16px;
+            margin: 0;
+        }
+    
+        .employee-div table tr td {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: clip;
+            /* or ellipsis */
+            text-align: left;
+        }
+    
+        .employee-div table tr td:first-child {
+            width: 27%;
+        }
+    
+        .employee-div table tr td:last-child {
+            width: 73%;
+        }
+    
+        .underline-wide {
+            display: inline-block;
+            border-bottom: 1px solid black;
+            width: 100%;
+        }
+    
+        .underline-normal {
+            display: inline-block;
+            border-bottom: 1px solid black;
+            width: 250px;
+        }
+    
+        .underline-normal-name {
+            display: inline-block;
+            border-bottom: 1px solid black;
+            width: 250px;
+            font-size: 20px;
+            text-align: center;
+            font-weight: bold;
+        }
+    
+        .acco {
+            word-wrap: break-word;
+            /* Break long words */
+            overflow-wrap: break-word;
+            /* Modern equivalent */
+            white-space: normal;
+            width: 125px;
+        }
+
+
+    .sign-div div p{
+        font-size: 16px;
+        color: black;
+    }
+    .content-all-divs {
+        display: block;
+    }
+}
+    body{
+        font-family: 'Times New Roman', Times, serif;
+        background-color: #181a1b;
+    }
+    table {
+    width: 100%; /* Or you can set fixed width like 800px or 210mm for A4 */
+    border-collapse: collapse;
+    table-layout: fixed; /* Ensures width settings are respected */
+    
+    }
+    p{
+        font-size: 16px;
+        margin: 0;
+    }
+
+    th, td {
+    text-align: center;
+    vertical-align: middle;
+    padding: 8px;
+    }
+    th strong, td strong{
+        font-size: 14.67px;
+    }
+
+    td:first-child {
+    text-align: left;
+    font-weight: bold;
+    width: 40%;     /* Adjust width of the "Full days stay" column */
+    height: 30px;   /* Adjust height as needed */
+    }
+
+    th:first-child {
+    width: 20%;     /* Equal width for the 3 columns */
+    height: 30px;
+    }
+
+    td:not(:first-child) {
+    height: 30px;   /* Data cells height */
+    }
+    .grand-total td:first-child{
+        text-align: center;
+        width: 80%;
+    }
+    .grand-total td:last-child{
+        width: 20%;
+    }
+    .notActive {
+        display: none;
+    }
