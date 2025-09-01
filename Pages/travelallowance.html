@@ -15,6 +15,7 @@
         integrity="sha384-7qAoOXltbVP82dhxHAUje59V5r2YsVfBafyUDxEdApLPmcdhBPg1DKg1ERo0BZlK"
         crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../CSS/travelallowance.css">
+    <link rel="stylesheet" href="../CSS/payment.css">
     <title>AgpTask: Allowance Printing</title>
 </head>
 <body>
@@ -91,12 +92,74 @@
 
         checkbox.addEventListener('change', function(){
             if (checkbox.checked) {
+                const newDiv = document.createElement('div');
+                newDiv.classList.add('payment-form-div', 'papersize');
+
+                // Add the driver's name to the form content
+                newDiv.innerHTML = `
+                <div>
+                    <input type="image" src="../assets/picture/agplogo.png" class="d-block mx-auto" alt="MekelleFarm" width="300px" height="64px">
+                </div>
+                <div class="col font1 mt-5">
+                    <p>COMPANY NAME:_______________________________________________________</p>
+                    <p class="text-end">CPV_____________________</p>
+                    <p class="text-end">Date____________________</p>
+                </div>
+                <div class="mb-5">
+                    <p class="font1">Cheque Payment Request Form</p>
+                </div>
+                <div class="font2">
+                    <p>Expense Type____________________________________________________________________________</p>
+                    <p>Budget Category/Line Item________________________________________________________________</p>
+                    <p>Business Unit/Budget Tab_________________________________________________________________</p>
+                    <p>Acct No.________________________________________ Bank Branch __________________________________</p>
+                    <p>Pay to: <span class="span">____</span><span class="span">${name}</span><span class="span">______________</span></p>
+                    <p>Amount in figure ________________________________________</p>
+                    <p>Amount in word ________________________________________________________________________________</p>
+                </div>
+                <div class="font2 my-5">
+                    <p>Purpose of Payment: <span class="span pups">__Perdime Payment for DOC delivery.__</span></p>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        <p class="font2">Requested By:</p>
+                        <div class="font3">
+                            <p>Name:______________________</p>
+                            <p>Signature:_________________</p>
+                            <p>Date:______________________</p>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <p class="font2">Checked By:</p>
+                        <div class="font3">
+                            <p>Name:______________________</p>
+                            <p>Signature:_________________</p>
+                            <p>Date:______________________</p>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <p class="font2">Approved By:</p>
+                        <div class="font3">
+                            <p>Name:______________________</p>
+                            <p>Signature:_________________</p>
+                            <p>Date:______________________</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+                // Store the driver's name in a data attribute for easy reference
+                newDiv.setAttribute('data-driver-name', name);
+
+                // Append the new div to the container
+                nameDisplayContainer.appendChild(newDiv);
+                
                 const newDivs = document.createElement('div');
                 newDivs.classList.add('content-all-divs', 'content-all');
                 newDivs.innerHTML = `
                 <div class="header-div text-center">
-            <p class="header-p-main m-0"> <input type="image" src="../assets/picture/agplogo.png" class="d-block mx-auto" alt="MekelleFarm" width="250px" height="50px">AGP Poultry PLC</p>
-            <p class="header-p-sub m-0">Travel allowance and expenses claims form</p>
+            <p class="p header-p-main m-0"> <input type="image" src="../assets/picture/agplogo.png" class="d-block mx-auto" alt="MekelleFarm" width="250px" height="50px">AGP Poultry PLC</p>
+            <p class="p header-p-sub m-0">Travel allowance and expenses claims form</p>
         </div>
         <div class="employee-div text-black pt-1">
             <table>
@@ -108,31 +171,31 @@
                 </tr>
                 <tr>
                     <td>
-                        <p>Designation:</p>
+                        <p class="p">Designation:</p>
                     </td>
                     <td><span class="underline-normal"></span></td>
                 </tr>
                 <tr>
                     <td>
-                        <p>Place travelled:</p>
+                        <p class="p">Place travelled:</p>
                     </td>
                     <td><span class="underline-normal"></span></td>
                 </tr>
                 <tr>
                     <td>
-                        <p>Reason for travel:</p>
+                        <p class="p">Reason for travel:</p>
                     </td>
                     <td><span class="underline-wide"></span></td>
                 </tr>
                 <tr>
                     <td>
-                        <p>Date of start of travel:</span></p>
+                        <p class="p">Date of start of travel:</span></p>
                     </td>
                     <td><span class="underline-normal"></td>
                 </tr>
                 <tr>
                     <td>
-                        <p>Date of return:</p>
+                        <p class="p">Date of return:</p>
                     </td>
                     <td><span class="underline-normal"></span></td>
                 </tr>
@@ -142,7 +205,7 @@
         </div>
 
         <div class="allowance-div mt-3">
-            <p class="text-black">Allowances Claimed In Birr:</p>
+            <p class="p text-black">Allowances Claimed In Birr:</p>
             <table class="table table-bordered text-center border-black">
                 <tr>
                     <th rowspan="2"><strong>At the date of Departure</strong></th>
@@ -220,16 +283,16 @@
         </div>
         <div class="sign-div d-flex justify-content-between col-12 text-center pt-2">
             <div class="px-2">
-                <p>________________________</p>
-                <p>Signature of employee</p>
+                <p class="p">________________________</p>
+                <p class="p">Signature of employee</p>
             </div>
             <div class="px-2">
-                <p>________________________</p>
-                <p>Reviewed by</p>
+                <p class="p">________________________</p>
+                <p class="p">Reviewed by</p>
             </div>
             <div class="px-2">
-                <p>________________________</p>
-                <p>Approved by</p>
+                <p class="p">________________________</p>
+                <p class="p">Approved by</p>
             </div>
         </div>`;
 
