@@ -134,48 +134,48 @@
                 <td>Mesfin G/hiwet</td>
                 <td class=""><input class="form-check-input me-1" type="checkbox"></td>
             </tr>
-            <tr class="agp">
+            <tr class="agp notActive">
                 <td>Amare Mesele</td>
                 <td class=""><input class="form-check-input me-1" type="checkbox"></td>
             </tr>
             <!-- Amhara -->
-            <tr class="am">
+            <tr class="am notActive">
                 <td>Tewodros Tesfahun</td>
                 <td class=""><input class="form-check-input me-1" type="checkbox"></td>
             </tr>
-            <tr class="am">
+            <tr class="am notActive">
                 <td>Altaseb Beyene</td>
                 <td class=""><input class="form-check-input me-1" type="checkbox"></td>
             </tr>
-            <tr class="am">
+            <tr class="am notActive">
                 <td>Yihun Aschale</td>
                 <td class=""><input class="form-check-input me-1" type="checkbox"></td>
             </tr>
-            <tr class="am">
+            <tr class="am notActive">
                 <td>Yohannis Teshome</td>
                 <td class=""><input class="form-check-input me-1" type="checkbox"></td>
             </tr>
-            <tr class="am">
+            <tr class="am notActive">
                 <td>Mohammed Seid</td>
                 <td class=""><input class="form-check-input me-1" type="checkbox"></td>
             </tr>
-            <tr class="am">
+            <tr class="am notActive">
                 <td>Achenef Gedamu</td>
                 <td class=""><input class="form-check-input me-1" type="checkbox"></td>
             </tr>
-            <tr class="am">
+            <tr class="am notActive">
                 <td>Temesgen Birhane</td>
                 <td class=""><input class="form-check-input me-1" type="checkbox"></td>
             </tr>
-            <tr class="am Tig">
+            <tr class="am">
                 <td>Ebrahim Dawud</td>
                 <td class=""><input class="form-check-input me-1" type="checkbox"></td>
             </tr>
-            <tr class="am">
+            <tr class="am notActive">
                 <td>Kemal Seid</td>
                 <td class=""><input class="form-check-input me-1" type="checkbox"></td>
             </tr>
-            <tr class="am">
+            <tr class="am notActive">
                 <td>Yonas Tilahun</td>
                 <td class=""><input class="form-check-input me-1" type="checkbox"></td>
             </tr>
@@ -183,11 +183,11 @@
                 <td>Tesfamikael Misganaw</td>
                 <td class=""><input class="form-check-input me-1" type="checkbox"></td>
             </tr>
-            <tr class="am">
+            <tr class="am notActive">
                 <td>Mengistu Adimas</td>
                 <td class=""><input class="form-check-input me-1" type="checkbox"></td>
             </tr>
-            <tr class="am">
+            <tr class="am notActive">
                 <td>Mestet Arega</td>
                 <td class=""><input class="form-check-input me-1" type="checkbox"></td>
             </tr>
@@ -199,7 +199,7 @@
                 <td>Amanuel Brhane</td>
                 <td class=""><input class="form-check-input me-1" type="checkbox"></td>
             </tr>
-            <tr class="am Tig">
+            <tr class="am">
                 <td>Assresa Mhretu</td>
                 <td class=""><input class="form-check-input me-1" type="checkbox"></td>
             </tr>
@@ -274,6 +274,9 @@ agpBtn.addEventListener('click', function() {
 amBtn.addEventListener('click', function() {
     resetSelection();
     tigElement.forEach(function(element) {
+        element.style.display = 'none';
+    });
+    agpElement.forEach(function(element) {
         element.style.display = 'none';
     });
     amElement.forEach(function(element) {
@@ -393,3 +396,4 @@ checkboxes.forEach(checkbox => {
 
 </body>
 </html>
+
