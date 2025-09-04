@@ -6,7 +6,7 @@
         margin: 0;
         padding: 0;
     }
-    .driversls {
+    .driversls, .navbarlist {
         visibility: hidden;
         display: none;
     }
@@ -90,10 +90,6 @@
         display: block;
     }
 }
-    body{
-        font-family: 'Times New Roman', Times, serif;
-        background-color: #181a1b;
-    }
     table {
     width: 100%; /* Or you can set fixed width like 800px or 210mm for A4 */
     border-collapse: collapse;

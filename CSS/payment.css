@@ -8,7 +8,7 @@
         padding: 0;
     }
 
-    .driversls {
+    .driversls, .navbarlist {
         visibility: hidden;
         display: none;
     }
@@ -39,9 +39,48 @@
 }
 body{
     font-family: 'Times New Roman', Times, serif;
-    background-color: #181a1b;
+    background-color: #111827;
+}
+body div nav {
+    background-color: #1f2937;
+    color: #e5e7eb;
+}
+.btn{
+    background-color: #1f2937;
+    color: #e5e7eb;
+}
+body .driversls{
+    background-color: #111827;
+    color: #e5e7eb;
+}
+body .driversls h3{
+    background-color: #111827;
+    color: #e5e7eb;
+}
+.custom-dark-bg {
+    background-color: #1f2937;
+    color: white;
+    /* optional: ensure text is readable */
 }
 
+.custom-dark-bg th{
+    background-color: #4b5563;
+    color: white;
+}
+.custom-dark-bg td {
+    background-color: #111827;
+    color: white;
+}
+
+.tablediv, .dropdown-menu{
+    background-color: #1f2937;
+}
+.dropdown-menu li a{
+    color: #e5e7eb;
+}
+.dropdown-menu li a:hover {
+    color: #4b5563;
+}
 .font1 {
     font-size: 18px;
     font-weight: bold;
