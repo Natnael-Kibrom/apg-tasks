@@ -350,7 +350,7 @@
                 let name;
                 const nameInput = previousTd.querySelector('input[type="text"]');
                 if (nameInput) {
-                    name = nameInput.value.trim() || "Unnamed Driver"; // use text input value or placeholder text
+                    name = nameInput.value.trim() || "____________________"; // use text input value or placeholder text
                 } else {
                     name = previousTd.textContent.trim();
                 }
@@ -458,5 +458,6 @@
 
 
 </html>
+
 
 
