@@ -65,6 +65,10 @@
                     <th>Driver's Name</th>
                     <th>Selection For Printing</th>
                 </tr>
+                <tr>
+                    <td><input type="text" class="form-control form-control-sm w-75 text-center text-capitalize mx-auto" value="" placeholder="For new driver only"></td>
+                    <td><input class="form-check-input me-1" type="checkbox"></td>
+                </tr>
                 <tr class="Tig">
                     <td>G/Hiwot Teklu</td>
                     <td><input class="form-check-input me-1" type="checkbox"></td>
@@ -339,13 +343,17 @@
         // Loop through each checkbox and add an event listener
         checkboxes.forEach(checkbox => {
             const previousTd = checkbox.closest('td').previousElementSibling; // Get the previous <td> (the driver's name)
-            const name = previousTd.textContent.trim(); // Extract the driver's name and trim any whitespace
-
             // Get the container where the new <div> elements will be added
             const nameDisplayContainer = document.getElementById('nameDisplayContainer');
-
             // Add event listener to each checkbox
             checkbox.addEventListener('change', function () {
+                let name;
+                const nameInput = previousTd.querySelector('input[type="text"]');
+                if (nameInput) {
+                    name = nameInput.value.trim() || "Unnamed Driver"; // use text input value or placeholder text
+                } else {
+                    name = previousTd.textContent.trim();
+                }
                 if (checkbox.checked) {
 
                     // Create a new <div> element with the name
@@ -423,7 +431,26 @@
                 }
             });
         });
+        window.addEventListener('DOMContentLoaded', () => {
+                // Hide all non-Tigray rows
+                document.querySelectorAll('.am, .agp').forEach(row => {
+                    row.style.display = 'none';
+                });
+                // Hide inactive Tigray rows
+                document.querySelectorAll('.Tig.notActive').forEach(row => {
+                    row.style.display = 'none';
+                });
+                // Set active region
+                activeButton = "Tigray";
+                updatePupsSpans();
+            });
 
+            document.addEventListener('input', function (e) {
+                    if (e.target.matches('input[type="text"]')) {
+                        let words = e.target.value.toLowerCase().split(' ');
+                        e.target.value = words.map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+                    }
+                });
     </script>
 
 
@@ -431,4 +458,5 @@
 
 
 </html>
+
 
