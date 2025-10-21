@@ -419,6 +419,15 @@
 
                     // Append the new div to the container
                     nameDisplayContainer.appendChild(newDiv);
+                    if (nameInput) {
+                            nameInput.addEventListener('input', () => {
+                                const div = nameDisplayContainer.querySelector(`[data-driver-name="${name}"]`);
+                                if (div) {
+                                    const spanName = div.querySelectorAll('span')[1]; // middle span holds name
+                                    spanName.textContent = nameInput.value.trim() || "____________________";
+                                }
+                            });
+                        }
 
                     updatePupsSpans();
                 } else {
@@ -458,4 +467,5 @@
 </body>
 
 </html>
+
 
