@@ -1,1 +1,227 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>12-hour ↔ 24-hour Time Converter</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    :root{ --bg:#031634; --card:#06204b; --accent:#ffd166; }
+    html,body{ height:100%; }
+    body{
+      background: linear-gradient(180deg, var(--bg), #021022 140%);
+      color: #eef6ff;
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      display:flex; align-items:center; justify-content:center; padding:2rem;
+    }
+    .converter-card{
+      width:100%; max-width:760px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+      border: 1px solid rgba(255,255,255,0.06);
+      box-shadow: 0 10px 30px rgba(2,6,23,0.6);
+      border-radius: 12px; padding:1.5rem;
+    }
+    .muted { color: rgba(255,255,255,0.65); }
+    .time-display{
+      font-family: "Segoe UI", Roboto, Arial;
+      font-weight:700; font-size:1.8rem;
+    }
+    .badge-accent{ background:var(--accent); color:#04203b; font-weight:600; }
+    .form-control[aria-invalid="true"]{ border-color:#ff6b6b; box-shadow:none; }
+    .help { font-size:0.85rem; color:rgba(255,255,255,0.7); }
+    footer { font-size:0.8rem; color:rgba(255,255,255,0.55); text-align:center; margin-top:0.75rem; }
+    @media (max-width:575px){ .time-display{ font-size:1.4rem; } }
+  </style>
+</head>
+<body>
+  <div class="converter-card">
+    <div class="d-flex align-items-center justify-content-between mb-3">
+      <div>
+        <h3 class="mb-0">12-hour → 24-hour Time Converter</h3>
+        <p class="muted mb-0">Pick AM/PM time and see the 24-hour format instantly.</p>
+      </div>
+      <div class="text-end">
+        <span class="badge badge-accent rounded-pill px-3 py-2">Dark Blue Theme</span>
+      </div>
+    </div>
+
+    <form id="converterForm" class="row g-3 align-items-end">
+      <div class="col-sm-4">
+        <label class="form-label">Hour (1–12)</label>
+        <select id="hour12" class="form-select" aria-label="Hour">
+          <!-- options injected by JS -->
+        </select>
+      </div>
+
+      <div class="col-sm-4">
+        <label class="form-label">Minutes</label>
+        <select id="minute" class="form-select" aria-label="Minute">
+          <!-- options injected by JS -->
+        </select>
+      </div>
+
+      <div class="col-sm-4">
+        <label class="form-label">AM / PM</label>
+        <select id="ampm" class="form-select" aria-label="AM or PM">
+          <option value="AM">AM</option>
+          <option value="PM">PM</option>
+        </select>
+      </div>
+
+      <div class="col-12">
+        <div class="d-flex gap-2 flex-wrap">
+          <button type="button" id="convertBtn" class="btn btn-outline-light">Convert</button>
+          <button type="button" id="nowBtn" class="btn btn-light text-dark">Set to Current Time</button>
+          <button type="button" id="swapBtn" class="btn btn-outline-info">12 ↔ 24 Input</button>
+
+          <div class="ms-auto d-flex gap-2">
+            <button type="button" id="copyBtn" class="btn btn-sm btn-outline-secondary">Copy 24‑hr</button>
+            <button type="button" id="resetBtn" class="btn btn-sm btn-outline-danger">Reset</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label">24‑hour result</label>
+        <input id="result24" class="form-control time-display" readonly aria-readonly="true" value="--:--">
+        <div class="help">Example: 14:05 (for 2:05 PM)</div>
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label">12‑hour input (free text)</label>
+        <input id="freeInput12" class="form-control" placeholder="e.g. 2:05 PM or 02:05 am">
+        <div class="help">Type a 12-hour time and press Convert or Enter. Minutes optional (defaults to 00).</div>
+      </div>
+
+      <div class="col-12">
+        <hr style="border-color:rgba(255,255,255,0.04)">
+        <div class="d-flex align-items-center justify-content-between">
+          <div>
+            <div class="muted">Converted</div>
+            <div id="humanReadable" class="time-display">-- : --</div>
+          </div>
+          <div class="text-end muted">
+            <small>Built with Bootstrap • Dark blue background</small>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <footer>Keyboard: hit <kbd>Enter</kbd> in the free input to convert. Responsive and accessible.</footer>
+  </div>
+
+  <script>
+    // Populate selects
+    const hour12 = document.getElementById('hour12');
+    const minute = document.getElementById('minute');
+    for(let h=1; h<=12; h++){ const opt = document.createElement('option'); opt.value = String(h).padStart(2,'0'); opt.text = String(h).padStart(2,'0'); hour12.append(opt); }
+    for(let m=0; m<60; m++){ const opt = document.createElement('option'); opt.value = String(m).padStart(2,'0'); opt.text = String(m).padStart(2,'0'); minute.append(opt); }
+
+    const ampm = document.getElementById('ampm');
+    const result24 = document.getElementById('result24');
+    const humanReadable = document.getElementById('humanReadable');
+    const freeInput12 = document.getElementById('freeInput12');
+
+    function to24(h12, m, ampmVal){
+      let h = parseInt(h12,10);
+      const mm = String(m).padStart(2,'0');
+      if(ampmVal === 'AM'){
+        if(h === 12) h = 0;
+      } else {
+        if(h !== 12) h = h + 12;
+      }
+      return String(h).padStart(2,'0') + ':' + mm;
+    }
+
+    function updateDisplay(){
+      const h = hour12.value; const m = minute.value; const ap = ampm.value;
+      const formatted = to24(h, m, ap);
+      result24.value = formatted;
+      humanReadable.textContent = `${h}:${m} ${ap} → ${formatted}`;
+    }
+
+    // Live update on change
+    [hour12, minute, ampm].forEach(el => el.addEventListener('change', updateDisplay));
+
+    document.getElementById('convertBtn').addEventListener('click', () => {
+      // If free input has value, prefer parsing it
+      const free = freeInput12.value.trim();
+      if(free) return parseFreeAndUpdate(free);
+      updateDisplay();
+    });
+
+    // Set to current time in 12-hour fields
+    document.getElementById('nowBtn').addEventListener('click', () => {
+      const now = new Date();
+      let h = now.getHours(); const m = now.getMinutes();
+      const ap = h >= 12 ? 'PM' : 'AM';
+      let h12v = h % 12; if(h12v === 0) h12v = 12;
+      hour12.value = String(h12v).padStart(2,'0');
+      minute.value = String(m).padStart(2,'0');
+      ampm.value = ap;
+      updateDisplay();
+    });
+
+    // Reset
+    document.getElementById('resetBtn').addEventListener('click', () => {
+      hour12.selectedIndex = 0; minute.selectedIndex = 0; ampm.selectedIndex = 0; freeInput12.value=''; result24.value='--:--'; humanReadable.textContent='-- : --';
+    });
+
+    // Copy 24-hr
+    document.getElementById('copyBtn').addEventListener('click', async () => {
+      try{ await navigator.clipboard.writeText(result24.value); alert('Copied: ' + result24.value); }catch(e){ alert('Copy failed — select and copy manually.'); }
+    });
+
+    // Swap to show helper for entering 24-hour (optional)
+    let showing24Input = false;
+    document.getElementById('swapBtn').addEventListener('click', () => {
+      showing24Input = !showing24Input;
+      if(showing24Input){
+        freeInput12.placeholder = 'Enter 24-hour time e.g. 14:05 (press Convert)';
+      } else {
+        freeInput12.placeholder = 'e.g. 2:05 PM or 02:05 am';
+      }
+    });
+
+    // Parse free input like "2:05 PM" or "14:05"
+    function parseFreeAndUpdate(text){
+      const t = text.trim();
+      // Try 24-hour first: HH:MM
+      const re24 = /^(?:([01]?\d|2[0-3]))[:.]?([0-5]?\d)$/i;
+      const m24 = t.match(re24);
+      if(m24){
+        const hh = m24[1].padStart(2,'0'); const mm = m24[2].padStart(2,'0');
+        result24.value = hh + ':' + mm;
+        // display human readable: convert back to 12
+        const hhNum = parseInt(hh,10); let h12 = hhNum % 12; if(h12 === 0) h12 = 12; const ap = hhNum >= 12 ? 'PM' : 'AM';
+        humanReadable.textContent = `${h12}:${mm} ${ap} → ${hh}:${mm}`;
+        return;
+      }
+      // Try 12-hour: H:MM AM/PM or H AM
+      const re12 = /^(1[0-2]|0?[1-9])(?::([0-5]?\d))?\s*(AM|PM|am|pm)$/i;
+      const m12 = t.match(re12);
+      if(m12){
+        const h = m12[1]; const mm = (m12[2]||'00').padStart(2,'0'); const ap = m12[3].toUpperCase();
+        // update selectors
+        hour12.value = String(parseInt(h,10)).padStart(2,'0'); minute.value = mm; ampm.value = ap;
+        const formatted = to24(hour12.value, minute.value, ap);
+        result24.value = formatted;
+        humanReadable.textContent = `${hour12.value}:${minute.value} ${ap} → ${formatted}`;
+        return;
+      }
+
+      // If can't parse
+      alert('Could not parse input. Use formats like "2:05 PM" or "14:05".');
+      freeInput12.focus();
+    }
+
+    // Enter key in free input triggers convert
+    freeInput12.addEventListener('keydown', (e)=>{ if(e.key === 'Enter'){ e.preventDefault(); parseFreeAndUpdate(freeInput12.value.trim()); } });
+
+    // Initialize with current time
+    document.getElementById('nowBtn').click();
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
 
