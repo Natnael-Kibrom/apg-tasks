@@ -1,0 +1,66 @@
+nav {
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Custom styles for dark mode compatibility with Bootstrap */
+.dark .navbar.bg-dark {
+    background-color: #1f2937 !important;
+}
+
+.dark .bg-white {
+    background-color: #1f2937 !important;
+}
+
+.dark .bg-gray-50 {
+    background-color: #374151 !important;
+}
+
+.dark .bg-gray-200 {
+    background-color: #4b5563 !important;
+}
+
+/* Ensure proper dark mode styling on initial load */
+.dark .form-control {
+    background-color: #374151;
+    border-color: #4b5563;
+    color: #e5e7eb;
+}
+
+.dark .form-control:focus {
+    background-color: #374151;
+    border-color: #3b82f6;
+    color: #e5e7eb;
+    box-shadow: 0 0 0 0.25rem rgba(59, 130, 246, 0.25);
+}
+
+.dark .form-label {
+    color: #e5e7eb;
+}
+
+.dark .btn-outline-secondary {
+    color: #e5e7eb;
+    border-color: #6b7280;
+}
+
+.dark .btn-outline-secondary:hover {
+    background-color: #6b7280;
+    border-color: #6b7280;
+    color: #fff;
+}
+
