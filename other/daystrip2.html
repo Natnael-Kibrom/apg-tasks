@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trip Day Allocator</title>
+    <meta name="description" content="Allocate days evenly across trips with rounding." />
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class'
+        }
+    </script>
+
+    <style>
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Custom styles for dark mode by default */
+        body {
+            background-color: #111827;
+            color: #f3f4f6;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body.light {
+            background-color: #f3f4f6;
+            color: #111827;
+        }
+
+        .card-custom {
+            background-color: #1f2937;
+            transition: background-color 0.3s;
+        }
+
+        body.light .card-custom {
+            background-color: #ffffff;
+        }
+
+        .form-control-custom {
+            background-color: #374151;
+            color: #f9fafb;
+            border-color: #4b5563;
+            transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+        }
+
+        body.light .form-control-custom {
+            background-color: #ffffff;
+            color: #111827;
+            border-color: #d1d5db;
+        }
+
+        .history-item {
+            background-color: #374151;
+            transition: background-color 0.3s;
+        }
+
+        body.light .history-item {
+            background-color: #f3f4f6;
+        }
+
+        .btn-primary-custom {
+            background-color: #3b82f6;
+            border-color: #3b82f6;
+        }
+
+        body.light .btn-primary-custom {
+            background-color: #2563eb;
+            border-color: #2563eb;
+        }
+
+        .navbar-custom {
+            background-color: #1f2937 !important;
+            transition: background-color 0.3s;
+        }
+
+        body.light .navbar-custom {
+            background-color: #1e40af !important;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom mb-4">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="bi bi-calendar-week me-2"></i>Trip Day Allocator
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#"><i class="bi bi-calculator me-1"></i> Calculator</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="bi bi-clock-history me-1"></i> History</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="bi bi-gear me-1"></i> Settings</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-10 col-lg-8">
+                <div class="card card-custom shadow-lg rounded-3 border-0">
+                    <div class="card-body p-4 p-md-5">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h1 class="h3 mb-0">Trip Day Allocator</h1>
+                            <button id="themeToggle" class="btn btn-outline-secondary">
+                                <i class="bi bi-sun-fill me-1"></i> Light Mode
+                            </button>
+                        </div>
+
+                        <div class="row mb-4">
+                            <div class="col-md-6 mb-3 mb-md-0">
+                                <label for="trips" class="form-label">Number of Trips</label>
+                                <input type="number" id="trips" class="form-control form-control-custom"
+                                    placeholder="Enter number of trips">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="days" class="form-label">Total Days</label>
+                                <input type="number" id="days" class="form-control form-control-custom"
+                                    placeholder="Enter total days">
+                            </div>
+                        </div>
+
+                        <button id="calculateBtn" class="btn btn-primary-custom btn-lg w-100 mb-4">
+                            <i class="bi bi-calculator me-2"></i>Calculate Allocation
+                        </button>
+
+                        <div id="resultContainer" class="d-none">
+                            <h2 class="h4 mb-3">Allocation Result:</h2>
+                            <div class="card bg-dark border-secondary">
+                                <div class="card-body">
+                                    <pre id="result" class="text-light mb-0 fade-in"></pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card card-custom shadow-lg rounded-3 border-0 mt-4">
+                    <div class="card-body p-4">
+                        <h3 class="h5 mb-3"><i class="bi bi-clock-history me-2"></i>Calculation History</h3>
+                        <div id="historyContainer">
+                            <ul id="historyList" class="list-unstyled mb-0">
+                                <!-- History items will be added here -->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Theme toggle functionality
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('light');
+
+            if (body.classList.contains('light')) {
+                themeToggle.innerHTML = '<i class="bi bi-moon-fill me-1"></i> Dark Mode';
+            } else {
+                themeToggle.innerHTML = '<i class="bi bi-sun-fill me-1"></i> Light Mode';
+            }
+
+            // Save theme preference to localStorage
+            localStorage.setItem('theme', body.classList.contains('light') ? 'light' : 'dark');
+        });
+
+        // Check for saved theme preference
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'light') {
+            body.classList.add('light');
+            themeToggle.innerHTML = '<i class="bi bi-moon-fill me-1"></i> Dark Mode';
+        }
+
+        // Calculate button functionality
+        document.getElementById('calculateBtn').addEventListener('click', allocateDays);
+
+        function allocateDays() {
+            const trips = parseInt(document.getElementById("trips").value);
+            const totalDays = parseFloat(document.getElementById("days").value);
+            const resultEl = document.getElementById("result");
+            const resultContainer = document.getElementById("resultContainer");
+            const historyList = document.getElementById("historyList");
+
+            // Validate inputs
+            if (isNaN(trips) || isNaN(totalDays) || trips <= 0 || totalDays <= 0) {
+                resultEl.textContent = "Please enter valid numbers for trips and days.";
+                resultContainer.classList.remove("d-none");
+                return;
+            }
+
+            const avg = totalDays / trips;
+            const roundedAvg = parseFloat(avg.toFixed(1));
+            const exactTotal = parseFloat((roundedAvg * trips).toFixed(1));
+
+            let output = '';
+
+            if (exactTotal === totalDays) {
+                output = `${trips} trip${trips !== 1 ? 's' : ''} with ${roundedAvg.toFixed(1)} days\nTotal: ${exactTotal.toFixed(1)} days`;
+            } else {
+                const base = Math.floor(avg * 10) / 10;
+                const diff = totalDays - base * trips;
+                const highCount = Math.round(diff / 0.1);
+                const lowCount = trips - highCount;
+                const high = (base + 0.1).toFixed(1);
+                const low = base.toFixed(1);
+
+                output += `${highCount} trip${highCount !== 1 ? 's' : ''} with ${high} days\n`;
+                output += `${lowCount} trip${lowCount !== 1 ? 's' : ''} with ${low} days\n`;
+                const total = (highCount * high + lowCount * low).toFixed(1);
+                output += `Total: ${total} days`;
+            }
+
+            // Show result
+            resultEl.textContent = output;
+            resultContainer.classList.remove("d-none");
+            resultEl.classList.remove("fade-in");
+            void resultEl.offsetWidth;
+            resultEl.classList.add("fade-in");
+
+            // Save to history
+            const li = document.createElement("li");
+            li.className = "history-item p-3 rounded mb-2";
+            li.innerHTML = `
+                <div class="d-flex justify-content-between">
+                    <div>${output.replace(/\n/g, '<br>')}</div>
+                    <small class="text-muted">${new Date().toLocaleTimeString()}</small>
+                </div>
+            `;
+            historyList.prepend(li);
+
+            // Add some example history items if empty
+            if (historyList.children.length === 1) {
+                const examples = [
+                    { trips: 5, days: 7, output: "3 trips with 1.4 days\n2 trips with 1.4 days\nTotal: 7.0 days" },
+                    { trips: 3, days: 10, output: "3 trips with 3.3 days\nTotal: 10.0 days" }
+                ];
+
+                examples.forEach(example => {
+                    const exLi = document.createElement("li");
+                    exLi.className = "history-item p-3 rounded mb-2";
+                    exLi.innerHTML = `
+                        <div class="d-flex justify-content-between">
+                            <div>${example.output.replace(/\n/g, '<br>')}</div>
+                            <small class="text-muted">Example</small>
+                        </div>
+                    `;
+                    historyList.appendChild(exLi);
+                });
+            }
+        }
+
+        // Add event listeners for input fields to allow Enter key to calculate
+        document.getElementById('trips').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                allocateDays();
+            }
+        });
+
+        document.getElementById('days').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                allocateDays();
+            }
+        });
+    </script>
+</body>
+
+</html>
