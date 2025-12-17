@@ -12,6 +12,14 @@
         visibility: hidden;
         display: none;
     }
+    
+        /* this for CUBE.html */
+        .spanlandscape {
+            font-size: 18px;
+            text-decoration: underline 0.5px solid;
+            text-underline-offset: 2px;
+    
+        }
 
     .papersize {
         width: 170mm;
@@ -22,24 +30,7 @@
         margin-bottom: 55px;
         padding-top: 40px;
     }
-        
-    /* this for Creates.html */
-    .papersizelandscape {
-        width: 299mm;
-        /* A4 landscape width */
-        height: 210mm;
-        /* A4 landscape height */
-        margin: 0 auto;
-        margin-bottom: 50px;
-        padding-top: 40px;
-    }
-    /* this for Creates.html */
-    .spanlandscape {
-        font-size: 20px;
-        text-decoration: underline 0.5px solid;
-        text-underline-offset: 2px;
-        
-    }
+
     .span {
         font-size: 20px;
         text-decoration: underline 1.5px solid;

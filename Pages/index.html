@@ -32,6 +32,12 @@
                         <li class="nav-item">
                             <a class="nav-link text-light" href="./travelallowance.html">Allowance Print</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" href="./cube.html">Creat-Format</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" href="./timeconverter.html">Time-Converter</a>
+                        </li>
                         <div class="btn-group">
                             <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static"
                                 aria-expanded="false">
@@ -137,6 +143,10 @@
                     <td>Ebrahim Mohamed</td>
                     <td class=""><input class="form-check-input me-1" type="checkbox"></td>
                 </tr>
+                <tr class="Tig">
+                    <td>Kibrom Desta</td>
+                    <td class=""><input class="form-check-input me-1" type="checkbox"></td>
+                </tr>
                 <tr class="Tig notActive">
                     <td>Dejen Kiros</td>
                     <td class=""><input class="form-check-input me-1" type="checkbox"></td>
@@ -194,7 +204,7 @@
                     <td>Ebrahim Dawud</td>
                     <td class=""><input class="form-check-input me-1" type="checkbox"></td>
                 </tr>
-                <tr class="am notActive">
+                <tr class="am">
                     <td>Kemal Seid</td>
                     <td class=""><input class="form-check-input me-1" type="checkbox"></td>
                 </tr>
@@ -230,6 +240,19 @@
                     <td>Belete Kassa</td>
                     <td class=""><input class="form-check-input me-1" type="checkbox"></td>
                 </tr>
+                <tr class="am">
+                    <td>Fiseha Birhane</td>
+                    <td class=""><input class="form-check-input me-1" type="checkbox"></td>
+                </tr>
+                <tr class="am">
+                    <td>Dereje Tsega</td>
+                    <td class=""><input class="form-check-input me-1" type="checkbox"></td>
+                </tr>
+                <tr class="am">
+                    <td>Hailemaryam Dawit</td>
+                    <td class=""><input class="form-check-input me-1" type="checkbox"></td>
+                </tr>
+
             </table>
         </div>
         
@@ -407,14 +430,14 @@
                     // Append the new div to the container
                     nameDisplayContainer.appendChild(newDiv);
                     if (nameInput) {
-                        nameInput.addEventListener('input', () => {
-                            const div = nameDisplayContainer.querySelector(`[data-driver-name="${name}"]`);
-                            if (div) {
-                                const spanName = div.querySelectorAll('span')[1]; // middle span holds name
-                                spanName.textContent = nameInput.value.trim() || "Unnamed Driver";
-                            }
-                        });
-                    }
+                            nameInput.addEventListener('input', () => {
+                                const div = nameDisplayContainer.querySelector(`[data-driver-name="${name}"]`);
+                                if (div) {
+                                    const spanName = div.querySelectorAll('span')[1]; // middle span holds name
+                                    spanName.textContent = nameInput.value.trim() || "____________________";
+                                }
+                            });
+                        }
 
                     updatePupsSpans();
                 } else {
@@ -454,3 +477,8 @@
 </body>
 
 </html>
+
+
+
+
+
